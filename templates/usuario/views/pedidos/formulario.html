@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block conteudo %} 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ url('perfil') }}" class="breadcrumb-link">
+                Perfil
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Endereços
+        </li>
+    </ol>
+</nav>
+{{ flash() }}
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <form action="{% if usuario().id %}{{url('usuarios/editar/'~usuario().id)}}{%endif%}" method="post">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="nome" id="nome" value="{{usuario().nome}}" class="form-control" placeholder="Nome">
+                        <label for="nome">Nome</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email" id="email" value="{{usuario().email}}" class="form-control" placeholder="E-mail">
+                        <label for="email">E-mail</label>
+                    </div> 
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="telefone" value="{{usuario().telefone}}" id="telefone" class="form-control" placeholder="telefone">
+                        <label for="telefone">Telefone</label>
+                    </div>  
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="cpf" value="{{usuario().cpf}}" id="cpf" class="form-control" placeholder="cpf">
+                        <label for="cpf">CPF</label>
+                    </div>  
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="password" name="senha" value="{{usuario().senha}}" id="senha" class="form-control" placeholder="senha">
+                        <label for="senha">Senha</label>
+                    </div>  
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-floating">
+                        <select class="form-select" hidden name="fktipousuario" id="fktipousuario">
+                            {% for tipo in tipousuario %}
+                            <option value="{{tipo.idtipousuario}}" {% if usuario.fkusuario == tipo.idtipousuario %}selected{%endif%}>{{tipo.desc_tipo}}</option>
+                            {%endfor%}
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid gap-2">
+                <input type="submit" class="btn btn-dark" value="{% if usuario().id %}Atualizar{%endif%}">
+            </div>
+        </form>
+    </div>    
+</div>
+{% endblock %}

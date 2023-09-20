@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ url() }}" class="breadcrumb-link">
+                    Home
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Validar senha
+            </li>
+        </ol>
+    </nav>
+    <div class="col-xl-4 col-lg-6 col-md-8 col-sm-12 mx-auto border rounded p-3 mb-4">
+        <div class="my-3">
+            {{flash()}}
+        </div>
+
+        <div class="card text-center border-0">
+            <div class="card-header fw-bold bg-transparent">
+                Validação de e-mail
+            </div>
+            <div class="card-body">
+                <p>Informe seu email, se o cadastro já existir você receberá uma mensagem contendo informações sobre como recuperar o acesso.</p>
+
+                <form action="{{url('confirmar')}}" method="post">
+<!--
+                    <div class="mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="e-mail" name="email" id="email" value="" class="form-control" placeholder="Email">
+                            <label for="nome">Email</label>
+                        </div>
+                    </div>-->
+                    <div class="mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="email" name="email" id="email" value="{{usuario.email}}" class="form-control" placeholder="Confirmação do Email">
+                            <label for="email">Email</label>
+                        </div> 
+                    </div>
+
+                    <div class="d-grid gap-2">
+
+
+
+                        <button type="submit" class="btn btn-dark">
+                            <i class="fa-solid fa-paper-plane"></i> Enviar
+                        </button>
+
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

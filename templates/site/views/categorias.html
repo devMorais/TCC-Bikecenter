@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-9 col-md-12">
+            <div class="row">
+                {%for produto in produtos%}
+                {% if qtdProduto(produto.id) > 0 %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <a href="{{url('produto/'~produto.id)}}" tooltip="tooltip" title="{{produto.desc_produto}}">
+                                <img src="{{url('uploads/imagens/'~produto.imagem)}}" class="d-block w-100" alt="...">
+                                <h4 class="card-title">{{produto.desc_produto}}</h4>
+
+                                <p class="card-text">{{resumirTexto(produto.detalhes_produtos, 150)}}</p>
+                            </a>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center">
+                            <span class="badge rounded-pill text-bg-warning" style="font-size: 1.0rem;">
+                                R$ {{ formatarValor(produto.valor) }}
+                            </span>
+                              {% if not usuario() or usuario().fktipousuario == 1 %}
+                            <i class="fas fa-cart-plus fa-2x text-dark" onclick="carrinhoModal({{ produto.id }})" tooltip="tooltip" title="Adicionar ao carrinho" data-bs-toggle="modal" data-bs-target="#carrinhoModal" style="cursor: pointer;"></i>      {% endif %}                 
+
+                            <div class="d-flex align-items-center">
+                                <span class="mr-2">Em estoque:</span>
+                                <span class="badge rounded-pill bg-secondary text-white">
+                                    {{qtdProduto(produto.id)}}
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {%endif%}
+                {%endfor %}
+            </div>
+        </div>
+        {{paginacao|raw}}
+        <div class="col-lg-3">
+            {% include'sidebar.html'%}
+            {% include'marca.html'%}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+

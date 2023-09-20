@@ -1,0 +1,170 @@
+<header class="p-3 text-dark bg-light shadow-sm">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="{{ url() }}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none" tooltip="tooltip" title="Página inicial">
+                <img src="{{ url('templates/site/assets/img/Bikecenter.svg') }}" alt="Bikecenter" height="22" width="60">
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{{url('./sobre')}}" class="nav-link text-dark px-2" tooltip="tooltip" title="Sobre a empresa">Sobre nós</a></li>
+                <div class="dropdown">
+                    <a class="btn btn--outline-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorias
+                    </a>
+                    <ul class="dropdown-menu" tooltip="tooltip" title="Categorias">
+                        {% for categoria in categorias %}
+                        <li><a class="dropdown-item"  href="{{url('categoria/'~categoria.id)}}">{{categoria.desc_categoria}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <li>
+                    <a href="{{ url('contato') }}" class="nav-link text-dark px-2" tooltip="tooltip" title="Fale Conosco">Fale Conosco</a>
+                </li>
+            </ul>
+
+
+            <form data-url-busca="{{url('buscar')}}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                <input type="search" name="busca" id="busca" class="form-control form-control-light" placeholder="Buscar..." aria-label="Search">
+            </form>
+            <div class="text-end">
+                {% if usuario().fktipousuario == 3 %}
+                <div class="btn-group">
+
+                    <button type="button" class="btn btn-warning dropdown-toggle me-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                        <i class="fa-solid fa-user me-2"></i> {{usuario().nome}}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <li>
+                            <a class="dropdown-item" href="{{url('admin/dashboard/')}}" tooltip="tooltip" title="Dashboard">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{url('admin/usuarios/editar/'~usuario().id)}}" tooltip="tooltip" title="Perfil">
+                                Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="{{url('admin/sair')}}" tooltip="tooltip" title="Sair do Sistema">
+                                Sair
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                {% elseif usuario().fktipousuario == 2 %}
+                <div class="btn-group">
+
+                    <button type="button" class="btn btn-warning dropdown-toggle me-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                        <i class="fa-solid fa-user me-2"></i> {{usuario().nome}}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <li>
+                            <a class="dropdown-item" href="{{url('admin/dashboard/')}}" tooltip="tooltip" title="Dashboard">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{url('admin/entregas/listar')}}" tooltip="tooltip" title="Perfil">
+                                Entregas
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="{{url('admin/sair')}}" tooltip="tooltip" title="Sair do Sistema">
+                                Sair
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                {% elseif usuario().fktipousuario == 1 %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-warning dropdown-toggle me-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                        <i class="fa-solid fa-user me-2"></i> {{usuario().nome}}
+                    </button>
+                    <div class="position-relative me-3" tooltip="tooltip" title="Ver carrinho" data-bs-toggle="modal" data-bs-target="#carrinhoModal" style="cursor: pointer;">
+                        <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                        {%if QtdCarrinho() > 0%}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger p-1" style="font-size: 0.75rem;">
+                            {{QtdCarrinho()}}
+                        </span>
+                        {%endif%}
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <li>
+                            <a class="dropdown-item" href="{{url('conta')}}" tooltip="tooltip" title="Dashboard">
+                                Minha Conta
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ url('perfil')}}" tooltip="tooltip" title="Perfil">
+                                Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="{{url('sair')}}" tooltip="tooltip" title="Sair do Sistema">
+                                Sair
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+
+
+
+                {% else %}
+                <!-- Button trigger modal -->
+                <a type="button" class="btn btn-outline-dark me-2" tooltip="tooltip" title="Faça login" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Entrar
+                </a>
+
+                <a href="{{url('cadastro')}}" class="btn btn-warning me-2" tooltip="tooltip" title="Junte-se a nós">
+                    Cadastre-se
+                </a>
+            
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="my-3" id="buscaResultado"></div>
+    </div>
+</header>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">{{saudacao()}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{url('login')}}" method="POST">      
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email"  class="form-control" placeholder="E-mail">
+                        <label for="email">E-mail</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="senha" id="senha" class="form-control"  placeholder="Senha">
+                        <label for="senha">Senha</label>
+                    </div>
+
+                    <button class="w-100 btn btn-lg btn-dark mb-5" type="submit">Entrar</button>
+                    <div class="text-center">
+                        <small class="text-muted"><i class="fa-solid fa-key"></i> <a  href="{{ url('contato') }}" class="fw-bold">Esqueceu a senha?</a></small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include'modalCarrinho.html'%}
+
+

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ url() }}" class="breadcrumb-link">
+                    Home
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Sua conta
+            </li>
+        </ol>
+    </nav>
+
+    <div class="col-md-6 col-sm-12 mx-auto border rounded p-3 mb-4">
+        <div class="my-3">
+            {{flash()}}
+        </div>
+        <form id="formulariosCadastro" action="{{url('cadastro')}}" method="post">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="nome" id="nome" value="{{usuario.nome}}" class="form-control" placeholder="Nome">
+                        <label for="nome">Nome</label>
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="email" id="email" value="{{usuario.email}}" class="form-control" placeholder="E-mail">
+                        <label for="email">E-mail</label>
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div> 
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="telefone" value="{{usuario.telefone}}" id="telefone" class="form-control" placeholder="">
+                        <label for="telefone">DDD + Telefone</label>
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>  
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="cpf" value="{{usuario.cpf}}" id="cpf" class="form-control" placeholder="cpf">
+                        <label for="cpf">CPF</label>
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>  
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="password" name="senha" value="{{usuario.senha}}" id="senha" class="form-control" placeholder="senha">
+                        <label for="senha">Senha</label>
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>  
+                </div>
+            </div>
+            <div class="d-grid gap-2">
+                <input type="submit" class="btn btn-dark" value="Cadastrar">
+            </div>
+        </form>
+        <div class="text-center">
+            <p class="fw-bold">Já possui cadastro no {{constant('SITE_NOME')}}?</p>
+
+            <button type="button" class="btn btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Faça seu login
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Login -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">{{saudacao()}}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{url('login')}}" method="POST">      
+                        <div class="form-floating mb-3">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="E-mail">
+                            <label for="email">E-mail</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" name="senha" id="senha" class="form-control"  placeholder="Senha">
+                            <label for="senha">Senha</label>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-dark mb-5" type="submit">Entrar</button>
+                        <div class="text-center">
+                            <small class="text-muted"> &copy; {{ "now"|date("Y") }} - {{constant('SITE_NOME')}}</small>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

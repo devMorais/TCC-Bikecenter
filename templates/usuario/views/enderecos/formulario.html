@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="container my-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ url('endereco') }}" class="breadcrumb-link">
+                    Endereços
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Endereços
+            </li>
+        </ol>
+    </nav>
+
+    {{ flash() }}
+    {% if endereco.id %}
+    <h5 class="mb-3 text-center lead">
+        Deixe seus endereços atualizados
+    </h5>
+    {% else %}
+    <h5 class="mb-3 text-center lead">
+        Cadastro de endereço
+    </h5>
+    {% endif %}
+
+    <div class="card-body">
+        <form id="formularioEndereco" action="{% if endereco.id %}{{ url('enderecos/editar/'~endereco.id) }}{% else %}{{ url('enderecos/cadastrar') }}{% endif %}" method="post">
+
+            <!-- Dados do CEP -->
+            <div class="mb-3">
+                <label for="cep" class="form-label">Digite seu CEP <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="cep" value="{{ endereco.cep }}" id="cep">
+                <div class="invalid-feedback"></div>
+                <div class="valid-feedback"></div>
+
+            </div>
+
+
+            <small class="text-muted">Dados preenchidos automaticamente através do CEP</small>
+            <hr>
+            <!-- Dados preenchidos automaticamente -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="logradouro" class="form-label">Logradouro</label>
+                        <input type="text" class="form-control" name="logradouro" value="{{ endereco.logradouro }}" id="logradouro" readonly>
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="cidade" class="form-label">Cidade</label>
+                        <input type="text" class="form-control" name="cidade" value="{{ endereco.cidade }}" id="cidade" readonly>
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="bairro" class="form-label">Bairro</label>
+                        <input type="text" class="form-control" name="bairro" value="{{ endereco.bairro }}" id="bairro" readonly>
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado</label>
+                        <input type="text" class="form-control" name="estado" value="{{ endereco.estado }}" id="estado" readonly>
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+
+            <small class="text-muted text-center">Os dados abaixo você precisa preencher!</small>
+
+            <hr>
+
+            <!-- Outros campos -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="complemento" class="form-label">Complemento <span class="text-danger">*</span></label>
+                        <input type="text" name="complemento" value="{{ endereco.complemento }}" class="form-control" id="descricao">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="idcategoria" class="form-label">Tipo:</label>
+                        <select class="form-select" name="fktipoendereco" id="idcategoria">
+                            {% for tipo in tipoenderecos %}
+                            <option value="{{ tipo.id_tipoendereco }}" {% if endereco.fktipoendereco == tipo.id_tipoendereco %}selected{% endif %}>{{ tipo.desc_tipoendereco }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="numero" class="form-label">Nº</label>
+                        <input type="number" class="form-control" name="numero" value="{{ endereco.numero }}" id="numero">
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão de envio -->
+            <div class="text-center">
+                <input type="submit" class="btn btn-dark" value="{% if endereco.id %}Atualizar{% else %}Cadastrar{% endif %}">
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
+

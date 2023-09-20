@@ -1,0 +1,15 @@
+<div class="card shadow mb-4">
+    <div class="card-header bg-dark text-center text-white fw-bold">
+        Marcas
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for marca in marcas %}
+        <li class="list-group-item border-0">
+            <a href="{{ url('marca/' ~ marca.id) }}" tooltip="tooltip" title="{{marca.desc_marca}}" class="text-decoration-none d-flex justify-content-between align-items-center p-3">
+                <span>{{ marca.desc_marca }}</span>
+                <i class="fa-solid fa-arrow-right fa-fade"></i>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

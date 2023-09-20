@@ -1,0 +1,40 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %} 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Marcas
+        </li>
+    </ol>
+</nav>
+<div class="card border-0 shadow-sm">
+    {{flash()}}
+    <div class="card-body">
+        <form action="{% if marca.id %}{{url('admin/marcas/editar/'~marca.id)}}{% else %}{{url('admin/marcas/cadastrar')}}{% endif %}" method="post">
+
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição da Marca</label>
+                <input type="text" name="desc_marca" value="{{marca.desc_marca}}" class="form-control" id="descricao">
+            </div>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Defina o Status</label>
+                <select class="form-select" name="status">
+                    <option value="1" {%if marca.status == '1'%}selected{% endif %}>Ativo</option>
+                    <option value="0" {%if marca.status == '0'%}selected{% endif %} >Inativo</option>
+                </select>
+            </div>
+
+            <input type="submit" class="btn btn-dark" value="{% if marca.id %}Atualizar{% else %}Cadastrar{% endif %}">
+
+        </form>
+
+
+    </div>
+</div>
+{% endblock %}

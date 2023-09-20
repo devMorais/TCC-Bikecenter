@@ -1,0 +1,92 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %}  
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+               Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Contas Pagar
+        </li>
+    </ol>
+</nav>
+
+{{ flash() }}
+
+<div class="card border-0 shadow-sm">
+    <!--        <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+                 <div>
+                    <span class="badge rounded text-bg-warning bg-opacity-25">
+                         <span class="text-dark bg-opacity-100">{{total.usuarios}} Clientes</span>
+                        <span class="badge text-bg-success bg-opacity-100">{{total.usuariosAtivo}}</span>
+                        <span class="badge text-bg-danger bg-opacity-100">{{total.usuariosInativo}}</span>
+                    </span> 
+                     
+                     <span class="badge rounded text-bg-danger bg-opacity-25">
+                        <span class="text-dark bg-opacity-100">{{total.admin}} admin</span>
+                        <span class="badge text-bg-success bg-opacity-100">{{total.adminAtivo}}</span>
+                        <span class="badge text-bg-danger bg-opacity-100">{{total.adminInativo}}</span>
+                    </span>
+                     
+                     <span class="badge rounded text-bg-secondary bg-opacity-25">
+                        <span class="text-dark bg-opacity-100">{{total.gerente}} gerente</span>
+                        <span class="badge text-bg-success bg-opacity-100">{{total.gerenteAtivo}}</span>
+                        <span class="badge text-bg-danger bg-opacity-100">{{total.gerenteInativo}}</span>
+                    </span>
+                </div>
+                <a href="{{url('admin/usuarios/cadastrar')}}" class="btn btn-dark" tooltip="tooltip" title="Cadastrar Post">
+                    Cadastrar
+                </a>
+            </div>-->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped" id="tabela">
+                <thead>
+                    <tr>
+                        <th>ID NF Entrada</th>
+                        <th class="text-center">Nº Nota de entrada</th>
+                        <th>Parcela</th>
+                        <th class="text-center">Valor</th>
+                        <th class="text-center">Data de vencimento</th>
+                        <th class="text-center">Data de baixa</th>
+                        <th>Ação:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for receber in contaspagar %}
+                    <tr>
+                        <th>{{receber.id}}</th>
+
+                        <td class="text-center">
+                            <div>
+                                {{receber.notaEntrada().numeronota}}
+                            </div>
+                        </td>
+                        <td>{{receber.parcela}}</td>
+                        <td class="text-center">
+
+                            R$ {{formatarValor(receber.valor)}}
+
+                        </td>
+
+                        <td class="text-center">{{ receber.datavencimento | date("d/m/Y") }}</td>
+
+
+                        <td>{{receber.databaixa}}</td>
+
+
+
+                        <td> <a href="{{url('admin/contaspagar/editar/'~receber.id)}}" title="Editar"><i class="fa-solid fa-pencil"></i></a></td>
+
+
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>     
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+<input type="checkbox" id="menu">
+<div class="sidebar">
+    <div class="sidebarLogo">
+        <a href="{{url('admin/dashboard')}}" data-bs-toggle="tooltip" title="Página Inicial">
+            <div class="logo">
+                <img src="{{ url('templates/site/assets/img/Bikecenter.svg') }}" width="300">
+            </div>
+        </a>
+    </div>
+    {% if usuario().fktipousuario == 3 %}
+    <div class="sidebarMenu">
+        <ul>
+            <li>
+                <a href="{{url('admin/produtos/listar')}}" tooltip="tooltip" title="Administração de Produtos">
+                    <i class="fa-brands fa-product-hunt"></i>
+                    <span> Cadastro de Produtos</span>
+                </a>
+            </li>  
+            <li>
+                <a href="{{url('admin/marcas/listar')}}" tooltip="tooltip" title="Administração de Marca">
+                    <i class="fa-solid fa-copyright"></i>
+                    <span>Cadastro de Marcas</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url('admin/categorias/listar')}}" tooltip="tooltip" title="Administração de Categorias">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Cadastro de Categorias</span>
+                </a>
+            </li> 
+            <li>
+                <a href="{{url('admin/fornecedores/listar')}}" tooltip="tooltip" title="Administração de Fornecedores">
+                    <i class="fa-solid fa-boxes-packing"></i>
+                    <span>Cadastro de Fornecedores</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url('admin/usuarios/listar')}}" tooltip="tooltip" title="Administração de Usuários">
+                    <i class="fas fa-users"></i> 
+                    <span>Cadastro de Usuários</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url('admin/entregas/listar')}}" tooltip="tooltip" title="Administração de Entregas">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>Visualizar Entregas e Status</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{url('admin/vendas/listar')}}" tooltip="tooltip" title="Administração de Vendas">
+                    <i class="fa-brands fa-salesforce"></i>
+                    <span>Visualizar Vendas</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url('admin/contasreceber/listar')}}" tooltip="tooltip" title="Contas à receber">
+                    <i class="fa-solid fa-magnifying-glass-dollar"></i>
+                    <span>Visualizar Contas a Receber</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url('admin/nf/cadastrar')}}" tooltip="tooltip" title="NF Entrada">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span>Nota Fiscal de Entrada de Produtos</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url('admin/consulta/estoque')}}" tooltip="tooltip" title="Consultar estoque">
+                    <i class="fa-solid fa-cubes"></i>
+                    <span>Consultar Estoque</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url('admin/contas/pagar')}}" tooltip="tooltip" title="Contas à pagar">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span> Visualizar Contas a Pagar</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    {%else%}
+    <div class="sidebarMenu">
+        <ul>
+            <li class="sidebarTitulo">
+                <i class="fa-solid fa-bars-progress"></i>
+                Administração
+            </li>
+            <li>
+                <a href="{{url('admin/entregas/listar')}}" tooltip="tooltip" title="Administração de Entregas">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>Entregas</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    {%endif%}
+</div>

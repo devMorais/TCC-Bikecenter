@@ -1,0 +1,545 @@
+{% extends "base.html" %}
+{% block corpo %}
+
+{% include 'menu.html' %}
+
+<div class="conteudo">
+    {% include 'topo.html' %}
+    <main>
+        {% block conteudo %}          
+        <h5 class="mb-3">Dashboard <small class="saudacao text-muted"> - {{saudacao()}}, {{usuario().nome}}. Seu último login foi em {{usuario().ultimo_login|date('d/m/Y')}} às {{usuario().ultimo_login|date('H:i')}}</small></h5>
+
+        {{ flash() }}
+
+        {% if usuario().fktipousuario == 3 %}
+
+        <div class="row">
+            <div class="col-xl-6 col-xxl-5 mb-4 d-flex">
+                <div class="w-100">
+                    <div class="row">
+                        <!--INICIO POSTS-->
+                        <div class="col-sm-6">
+                            <div class="card border-0 shadow-sm mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6 class="fw-bold text-secondary">Produtos</h6>
+                                        </div>
+
+                                        <div class="col-auto text-secondary">
+                                            <a href="{{url('admin/produtos/listar')}}" tooltip="tooltip" title="Cadastrar Produto">
+                                                <i class="fa-solid fa-file-pen"></i>
+                                            </a>                                            
+                                        </div>
+                                    </div>
+                                    <h1 class="mt-1 mb-3">{{total.produtos}}</h1>
+
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span class="badge text-bg-success bg-opacity-10"> <span class="text-success fw-bold">{{total.produtosAtivo}}</span> <span class="badge text-secondary">Ativo</span> </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="badge text-bg-danger bg-opacity-10"> <span class="text-danger fw-bold">{{total.produtosInativo}}</span> <span class="badge text-secondary">Inativo</span> </span>  
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>                                   
+                        </div>
+                        <!--FIM POSTS-->
+
+                        <!--INICIO CATEGORIAS-->
+                        <div class="col-sm-6">
+                            <div class="card border-0 shadow-sm mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6 class="fw-bold text-secondary">Categorias</h6>
+                                        </div>
+                                        
+                                        <div class="col-auto text-secondary">
+                                            <a href="{{url('admin/categorias/listar')}}" tooltip="tooltip" title="Listar Categorias">
+                                                  <i class="fa-solid fa-list"></i>
+                                            </a>                                            
+                                        </div>
+
+                                    
+                                    </div>
+                                    <h1 class="mt-1 mb-3">{{totalcat.total}}</h1>
+
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span class="badge text-bg-success bg-opacity-10"> <span class="text-success fw-bold">{{totalcat.ativo}}</span> <span class="badge text-secondary">Ativo</span> </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="badge text-bg-danger bg-opacity-10"> <span class="text-danger fw-bold">{{totalcat.inativo}}</span> <span class="badge text-secondary">Inativo</span> </span>  
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>                                   
+                        </div>
+                        <!--FIM CATEGORIAS-->
+
+                        <!--INICIO USUARIOS-->
+                        <div class="col-sm-6">
+                            <div class="card border-0 shadow-sm mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6 class="fw-bold text-secondary">Clientes</h6>
+                                        </div>
+                                        
+                                        <div class="col-auto text-secondary">
+                                            <a href="{{url('admin/usuarios/listar')}}" tooltip="tooltip" title="Listar Usuarios">
+                                                  <i  class="fas fa-users"></i>
+                                            </a>                                            
+                                        </div>
+
+                                      
+                                    </div>
+                                    <h1 class="mt-1 mb-3">{{usuarios.usuarios}}</h1>
+
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span class="badge text-bg-success bg-opacity-10"> <span class="text-success fw-bold">{{usuarios.usuariosAtivo}}</span> <span class="badge text-secondary">Ativo</span> </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="badge text-bg-danger bg-opacity-10"> <span class="text-danger fw-bold">{{usuarios.usuariosInativo}}</span> <span class="badge text-secondary">Inativo</span> </span>  
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>                                   
+                        </div>
+                        <!--FIM USUARIOS-->
+
+                        <!--INICIO VENDAS-->
+                        <div class="col-sm-6">
+                            <div class="card border-0 shadow-sm mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6 class="fw-bold text-secondary">Vendas</h6>
+                                        </div>
+                                        
+                                        <div class="col-auto text-secondary">
+                                            <a href="{{url('admin/vendas/listar')}}" tooltip="tooltip" title="Listar Vendas">
+                                                 <i class="fa-brands fa-salesforce"></i>
+                                            </a>                                            
+                                        </div>
+                                    </div>
+                                    <h1 class="mt-1 mb-3">{{vendas.total.venda}}</h1>
+                                    <div class="col-auto">
+                                        <span class="badge text-bg-success bg-opacity-10"> <span class="text-success fw-bold">R$ {{formatarValor(vendas.total.soma)}}</span> <span class="badge text-secondary"></span></span>
+                                    </div>
+                                </div>
+                            </div>                                   
+                        </div>
+                        <!--FIM GERENTES-->
+
+                        <!--INICIO ADMIN-->
+                        <div class="col-sm-6">
+                            <div class="card border-0 shadow-sm mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6 class="fw-bold text-secondary">Admin</h6>
+                                        </div>
+                                        
+                                         <div class="col-auto text-secondary">
+                                            <a href="{{url('admin/usuarios/listar')}}" tooltip="tooltip" title="Listar Usuarios">
+                                                  <i class="fa-solid fa-screwdriver-wrench"></i>
+                                            </a>                                            
+                                        </div>
+
+                                        
+                                    </div>
+                                    <h1 class="mt-1 mb-3">{{usuarios.admin}}</h1>
+
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span class="badge text-bg-success bg-opacity-10"> <span class="text-success fw-bold">{{usuarios.adminAtivo}}</span> <span class="badge text-secondary">Ativo</span> </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="badge text-bg-danger bg-opacity-10"> <span class="text-danger fw-bold">{{usuarios.adminInativo}}</span> <span class="badge text-secondary">Inativo</span> </span>  
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>                                   
+                        </div>
+                        <!--FIM ADMIN-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-xxl-7 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center mt-2">
+                        <div>
+                            <h6 class="fw-bold text-secondary">
+                                Últimos Produtos
+                            </h6>                          
+                        </div>
+                        <a href="{{url('admin/produtos/cadastrar')}}" class="fs-5" tooltip="tooltip" title="Cadastrar Produto">
+                            <i class="fa-solid fa-circle-plus"></i>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Descrição</th>
+                                        <th scope="col" class="text-center">Visitas</th>
+                                        <th scope="col" class="text-center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for produto in produtos %}
+                                    <tr>
+                                        <th>
+
+                                            <div>
+                                                <span>
+                                                    {% if produto.status == 1 %}
+                                                    <i class="fa-solid fa-circle text-success" tooltip="tooltip" title="Ativo"></i>
+                                                    {% else %}
+                                                    <i class="fa-solid fa-circle text-danger" tooltip="tooltip" title="Inativo"></i>
+                                                    {% endif %}
+                                                </span>
+                                                {{resumirTexto(produto.desc_produto, 100)}}
+                                            </div>
+                                            <small class="text-muted fw-normal">
+                                                Categoria: {{produto.categoria.desc_categoria}}
+                                            </small>
+                                        </th>
+
+
+                                        <td class="text-center">{{produto.visitas}}</td>
+                                        <td class="text-center">
+                                            <a href="{{url('admin/produtos/editar/'~produto.id)}}" title="Editar"><i class="fa-solid fa-pen"></i></a>
+
+                                            <a href="{{url('admin/produtos/deletar/'~produto.id)}}" data-confirm="Você realmente quer fazer isso?"><i class="fa-solid fa-trash"></i></a>                        
+                                        </td>
+                                    </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>     
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow-sm  h-100">
+                    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center mt-2">
+                        <h6 class="fw-bold text-secondary">
+                            Últimas Categorias
+                        </h6> 
+
+                        <a href="{{url('admin/categorias/cadastrar')}}" class="fs-5" tooltip="tooltip" title="Cadastrar Categoria">
+                            <i class="fa-solid fa-circle-plus"></i>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Descrição</th>
+
+                                        <th scope="col" class="text-center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for categoria in categorias %}
+                                    <tr>
+                                        <th>
+
+                                            <div>
+                                                <span>
+                                                    {% if categoria.status == 1 %}
+                                                    <i class="fa-solid fa-circle text-success" tooltip="tooltip" title="Ativo"></i>
+                                                    {% else %}
+                                                    <i class="fa-solid fa-circle text-danger" tooltip="tooltip" title="Inativo"></i>
+                                                    {% endif %}
+                                                </span>
+                                                {{resumirTexto(categoria.desc_categoria, 100)}}
+                                            </div>
+                                        </th>
+                                        <td class="text-center">
+                                            <a href="{{url('admin/categorias/editar/'~categoria.id)}}" title="Editar"><i class="fa-solid fa-pen"></i></a>
+
+                                            <a href="{{url('admin/categorias/deletar/'~categoria.id)}}" data-confirm="Você realmente quer fazer isso?"><i class="fa-solid fa-trash"></i></a>                        
+                                        </td>
+                                    </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>     
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!--INICIO ULTIMOS LOGIN-->
+            <div class="col-sm-6 col-md-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow-sm  h-100">
+                    <div class="card-header bg-white border-0 mt-2">
+                        <h6 class="fw-bold text-secondary">
+                            Últimos Logins
+                        </h6> 
+                    </div>
+                    <div class="card-body">
+                        {% if usuarios %}
+                        <ul class="list-group list-group-flush">
+                            {% for usuario in usuarios.logins %}
+                            <li class="list-group-item">
+                                <p>
+                                    <i class="fa-solid fa-user me-2"></i>
+                                    <span class="fw-bold">{{usuario.nome}}</span>
+                                </p>                              
+
+                            </li>
+                            {%endfor%}
+                        </ul>
+                        {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            Nenhum login para exibir!
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!--FIM ULTIMOS LOGIN-->
+            <div class="col-sm-12 col-md-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow-sm  h-100">
+                    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center mt-2">
+                        <h6 class="fw-bold text-secondary">
+                            Últimas Vendas
+                        </h6> 
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                       <th scope="col">Cliente</th>
+                                    <th scope="col" class="text-center">ID Venda
+                                </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for venda in vendas.ultimas %}
+                                    <tr>
+
+                                        <th>  {{venda.usuario().nome}} </th>
+
+                                       <td class="text-center">
+                                            <div>
+                                                <a href="#" onclick="entregaModal({{ venda.id }})" tooltip="tooltip" title="Itens da Venda" data-bs-toggle="modal" data-bs-target="#entregaModal">
+                                                    {{venda.id}}
+                                                    <i class="fa-solid fa-person-walking-luggage fa-2xl"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>     
+
+
+                    </div>
+                </div>
+            </div>
+       <div class="col-xl-12 col-xxl-12 mb-4">
+               
+                    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center mt-2">
+                        <div>
+                            <h6 class="fw-bold text-secondary">
+                                Entregas
+                            </h6>                          
+                        </div>
+                        <a href="{{url('admin/entregas/listar')}}" class="fs-5" tooltip="tooltip" title="Ir para entregas">
+                            <i class="fa-solid fa-eye fa-beat-fade"></i>
+                        </a>
+                    </div>
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped" id="tabela">
+                <thead>
+                    <tr>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Itens da Venda</th>
+                        <th class="text-center">Endereço</th>
+                        <th class="text-center">Cliente</th>
+                        <th class="text-center">Tipo de Endereço</th>
+                        <th class="text-center">Atualizar Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entrega in entregas.ultimas %}
+                    <tr>
+                        <td>
+                            <div>
+                                <span>
+                                    {% if entrega.fkstatusentrega == 1 %}
+                                    <i class="fa-solid fa-circle text-danger" tooltip="tooltip" title="Processamento do Pedido"></i>
+                                    {% elseif entrega.fkstatusentrega == 2 %}
+                                    <i class="fa-solid fa-circle text-warning" tooltip="tooltip" title="Preparação e Empacotamento"></i>
+                                    {% elseif entrega.fkstatusentrega == 3 %}
+                                    <i class="fa-solid fa-circle text-success" tooltip="tooltip" title="Envio e Rastreamento"></i>
+                                    {% else %}
+                                    <i class="fa-solid fa-circle text-info" tooltip="tooltip" title="Concluída"></i>
+                                    {% endif %}
+                                </span>
+                                {{ entrega.statusEntrega().desc_status }}
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div>
+                                <a href="#" onclick="entregaModal({{ entrega.venda().id }})" tooltip="tooltip" title="Itens da Venda" data-bs-toggle="modal" data-bs-target="#entregaModal">
+                                       <i class="fa-solid fa-person-walking-luggage fa-2xl"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <strong class="fw-normal">
+                                CEP: {{ entrega.endereco().cep }}
+                                | Complemento: {{ entrega.endereco().complemento }}
+                                | Nº: {{ entrega.endereco().numero }}
+                            </strong>
+                        </td>
+                        
+                        <td class="text-center">
+                            
+                            {{entrega.usuario().nome}}
+                           
+                        </td>   
+                        
+                        <td class="text-center">
+                            {% if entrega.endereco().fktipoendereco == 1 %}
+                            RESIDENCIAL
+                            {% else %}
+                            COMERCIAL
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ url('admin/entregas/editar/' ~ entrega.id) }}" tooltip="tooltip" title="Editar">
+                                <i class="fa-solid fa-pen m-1"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>     
+
+
+    </div>
+</div>
+                    
+                
+                    
+
+               
+            </div>
+
+        </div>
+
+        {%else%}
+
+
+
+        <div class="col-xl-12 col-xxl-12 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center mt-2">
+                    <div>
+                        <h6 class="fw-bold text-secondary">
+                            Entregas
+                        </h6>                          
+                    </div>
+                    <a href="{{url('admin/entregas/listar')}}" class="fs-5" tooltip="tooltip" title="Ir para entregas">
+                        <i class="fa-solid fa-eye fa-beat-fade"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Descrição</th>
+
+                                    <th scope="col">Endereco</th>
+                                    <th scope="col" class="text-center">Mudar status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entrega in entregas.ultimas %}
+                                <tr>
+                                    <th>
+
+                                        <div>
+                                            <span>
+                                                {% if entrega.fkstatusentrega  == 1 %}
+                                                <i class="fa-solid fa-circle text-danger" tooltip="tooltip" title="Inativo"></i>
+
+                                                {% else %}
+                                                <i class="fa-solid fa-circle text-success" tooltip="tooltip" title="Ativo"></i>
+                                                {% endif %}
+                                            </span>
+                                            {{entrega.desc_entrega}}
+                                        </div>
+                                        <small class="text-muted fw-normal">
+                                            ID Venda: {{entrega.venda().id}}
+                                        </small>
+                                    </th>
+
+
+                                    <th>
+
+                                        <div>
+                                            {{entrega.endereco().complemento}}
+                                        </div>
+                                        <small class="text-muted fw-normal">
+                                            CEP: {{entrega.endereco().cep}}
+                                            | Nº: {{entrega.endereco().numero}}
+
+
+                                        </small>
+                                    </th>
+
+                                    <td class="text-center">
+                                        <a href="{{url('admin/entregas/editar/'~entrega.id)}}" title="Editar"><i class="fa-solid fa-pen"></i></a>
+
+                                    </td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>     
+                </div>
+            </div>
+        </div>
+
+
+
+        {%endif%}
+
+
+
+        {% endblock %}
+    </main>
+    {% include'modalEntregas.html'%}
+    {% include 'rodape.html' %}
+</div>
+
+{% endblock %}

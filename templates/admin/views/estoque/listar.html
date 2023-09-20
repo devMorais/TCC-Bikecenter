@@ -1,0 +1,95 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %}  
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Estoque
+        </li>
+    </ol>
+</nav>
+
+{{ flash() }}
+
+<div class="card border-0 shadow-sm">
+    <!--    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <div>
+                <span class="badge rounded text-bg-danger bg-opacity-25">
+                    <span class="text-dark bg-opacity-100">{{total.processo}} - Processamento do Pedido</span>               
+                </span> 
+    
+                <span class="badge rounded text-bg-warning bg-opacity-25">
+                    <span class="text-dark bg-opacity-100">{{total.preparacao}} - Preparação e Empacotamento</span>
+    
+                </span>
+    
+                <span class="badge rounded text-bg-success bg-opacity-25">
+                    <span class="text-dark bg-opacity-100">{{total.envio}} - Envio e Rastreamento</span>
+                </span>
+    
+                <span class="badge rounded text-bg-info bg-opacity-25">
+                    <span class="text-dark bg-opacity-100">{{total.concluido}} - Conluída</span>
+                </span>
+            </div>
+        </div>-->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped" id="tabela">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">PRODUTO</th>
+                        <th class="text-center">FOTO</th>
+                        <th class="text-center">QUANTIDADE</th>
+                        
+                       
+                        <th class="text-center">Ação</th>
+                      
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for estoque in estoques %}
+                    <tr>
+                        <td>
+                            {{estoque.id}}
+                        </td>
+                        <td class="text-center">
+                            {{resumirTexto(estoque.produto().desc_produto, 20)}}
+                        </td>
+
+                        <td class="text-center">
+                            <a href="{{ url('uploads/imagens/' ~ estoque.produto().imagem) }}" data-fancybox data-caption="{{ estoque.produto().desc_produto }}">
+                                <img src="{{ url('uploads/imagens/thumbs/' ~ estoque.produto().imagem) }}" class="capa" style="max-width: 80px">
+                            </a>   
+
+                        </td>
+                        <td class="text-center">
+                            {{estoque.quantidade}}
+                        </td>
+                        <td class="text-center">
+
+{% if usuario().fktipousuario == 3 %}
+
+                            <a href="{{ url('admin/estoque/editar/' ~ estoque.id) }}" data-confirm="Você realmente quer fazer isso?"><i class="fa-solid fa-pen"></i></a>
+                             {% endif %}
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>     
+
+
+    </div>
+</div>
+{% include'modalEntregas.html'%}
+
+{% endblock %}

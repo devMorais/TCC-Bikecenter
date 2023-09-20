@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+
+<small class="saudacao text-center text-muted d-block my-3 lead">
+    <strong>{{ saudacao() }}, {{ usuario().nome }}.</strong>
+    <br>
+
+</small>
+
+<div class="container my-5">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ url() }}" class="breadcrumb-link">
+                    Home
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Sua conta
+            </li>
+        </ol>
+    </nav>
+    {{flash()}}
+    <div class="row">
+        <!-- ENDEREÇOS -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <a href="{{ url('endereco')}}" class="card-link">
+                <div class="card">
+                    <div class="icon-container text-center">
+                        <i class="fas fa-map-marked-alt fa-5x"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Meus Endereços</h5>
+                        <hr class="my-2">
+                        <p class="card-text">Organize seus endereços, selecione o principal para entrega e adicione novos.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- PERFIL -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <a href="{{ url('perfil')}}" class="card-link">
+                <div class="card">
+                    <div class="icon-container text-center">
+                        <i class="fas fa-user-circle fa-5x"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Perfil</h5>
+                        <hr class="my-2">
+                        <p class="card-text text-center">Visualize e atualize suas informações de perfil. </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- PEDIDOS -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <a href="{{ url('pedidos')}}" class="card-link">
+                <div class="card">
+                    <div class="icon-container text-center">
+                        <i class="fas fa-shopping-bag fa-5x"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Pedidos</h5>
+                        <hr class="my-2">
+                        <p class="card-text text-center">Visualize seus pedidos e acompanhe o status de entrega.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <a href="{{ url('boletos')}}" class="card-link">
+                <div class="card">
+                    <div class="icon-container text-center">
+                        <i class="fas fa-file-invoice-dollar fa-5x"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Gerar Boleto</h5>
+                        <hr class="my-2">
+                        <p class="card-text text-center">Baixe e pague seu boleto pendente.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,9 @@
+.breadcrumb-link {
+    color: #007bff; /* Cor azul, você pode alterar para sua preferência */
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.breadcrumb-link:hover {
+    color: #0056b3; /* Cor azul mais escura ao passar o mouse */
+}

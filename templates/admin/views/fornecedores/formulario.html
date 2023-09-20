@@ -1,0 +1,74 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %} 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Fornecedores
+        </li>
+    </ol>
+</nav>
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <form id="formularioFornecedor" action="{% if fornecedor.id %}{{url('admin/fornecedores/editar/'~fornecedor.id)}}{% else %}{{url('admin/fornecedores/cadastrar')}}{% endif %}" method="post">
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Descrição:</label>
+                <input type="text" name="desc_fornecedor" value="{{fornecedor.desc_fornecedor}}" class="form-control" id="descricao">
+                <div class="invalid-feedback"></div>
+                <div class="valid-feedback"></div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <label for="descricao" class="form-label">CNPJ:</label>
+                            <input type="text" class="form-control" name="cnpj" value="{{fornecedor.cnpj}}" id="cnpj">
+                            <div class="invalid-feedback"></div>
+                            <div class="valid-feedback"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="telefone" class="form-label">Telefone:</label>
+
+                        <input type="text" class="form-control" name="telefone" value="{{fornecedor.telefone}}" id="telefone">
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">E-mail</label>
+
+                        <input type="text" class="form-control" name="email" value="{{fornecedor.email}}" id="email">
+                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Status</label>
+                        <select class="form-select" name="status">
+                            <option value="1" {%if fornecedor.status == '1'%}selected{% endif %}>Ativo</option>
+                            <option value="0" {%if fornecedor.status == '0'%}selected{% endif %} >Inativo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" class="btn btn-dark" value="{% if fornecedor.id %}Atualizar{% else %}Cadastrar{% endif %}">
+        </form>
+
+
+    </div>
+</div>
+{% endblock %}

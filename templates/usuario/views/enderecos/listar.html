@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block conteudo %} 
+<div class="container  my-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ url('conta') }}" class="breadcrumb-link">
+                    Minha Conta
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Endereços
+            </li>
+        </ol>
+    </nav>
+    {{flash()}}
+    <div class="card border-0 shadow-sm">
+
+        <h5 class="mb-3 text-center lead">
+            Seus Endereços
+
+        </h5>
+
+        <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <div>
+                <span class="badge rounded text-bg-secondary">
+                    <i class="fas fa-map-marker-alt"></i> {{ total.enderecos }} Endereços
+                </span>
+                <span class="badge rounded text-bg-success">
+                    <i class="fas fa-home"></i> {{ total.residencial }} Residencial
+                </span>
+                <span class="badge rounded text-bg-danger">
+                    <i class="fas fa-building"></i> {{ total.comercial }} Comercial
+                </span>
+            </div>
+            <a href="{{ url('enderecos/cadastrar') }}" class="btn btn-dark" data-toggle="tooltip" title="Cadastrar Endereço">
+                Cadastrar
+            </a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped" id="tabela">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Complemento</th>
+                            <th scope="col">CEP</th>
+
+                            <th scope="col">Logradouro</th>
+                            <th scope="col">Nº</th>
+                            <th class="text-center">Tipo</th>
+                            <th class="text-center">Ações</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for endereco in enderecos %}
+                        <tr>
+
+                            <td>{{endereco.complemento}}</td>
+                            <td>{{endereco.cep}}</td>
+
+                            <td>{{endereco.logradouro}}</td>
+                            <td>{{endereco.numero}}</td>
+
+
+
+                            <td class="text-center">
+                                {% if endereco.fktipoendereco == 1 %}
+                                <i class="fa-solid fa-circle text-success" tooltip="tooltip" title="Residencial"></i>
+                                {% else %}
+                                <i class="fa-solid fa-circle text-danger" tooltip="tooltip" title="Comercial"></i>
+                                {% endif %}
+                            </td>
+
+                            <td class="text-center">
+                                <a href="{{url('enderecos/editar/'~endereco.id)}}" tooltip="tooltip" title="Editar"><i class="fa-solid fa-pen"></i></a>
+
+                                <a href="{{url('enderecos/deletar/'~endereco.id)}}" data-confirm="Você realmente quer fazer isso?"><i class="fa-solid fa-trash"></i></a>
+
+                                <!--<a href="{{url('enderecos/deletar/'~endereco.id)}}" tooltip="tooltip" title="Deletar"><i class="fa-solid fa-trash"></i></a>-->
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>     
+        </div>
+    </div>
+</div>
+{% endblock %}

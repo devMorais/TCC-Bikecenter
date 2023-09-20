@@ -1,0 +1,69 @@
+<!-- Modal -->
+<div class="modal fade" id="carrinhoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="cart-inline-title">Carrinho: <span id="total_itens" class="ml-1"> </span> Produto(s)</h5>
+                <input hidden id="txtquantidade">
+
+            </div>
+            <form  action="{{url('finalizar')}}" method="POST">
+                <div class="modal-body">
+                    {% if usuario() %}
+
+                    <div id="listar-carrinho"></div>
+
+
+                    <!--<small><div class="alert alert-success" align="center" id="mensagem"></div></small>--> 
+
+                    {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16">
+                            <path d="M9.293 1.293a1 1 0 0 1 1.414 0l5 5a1 1 0 0 1 .293.707v7a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-7a1 1 0 0 1 .293-.707l5-5a1 1 0 0 1 1.414 0z"/>
+                            <path d="M7.5 3.5a1 1 0 0 0-1 1V7a1 1 0 0 0 2 0V4.5a1 1 0 0 0-1-1zM7 9a1 1 0 0 0 1-1v-1a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1z"/>
+                        </svg>
+                        <strong>Atenção:</strong> Você precisa estar logado para acessar esta seção <i class="fa-solid fa-arrow-right fa-shake"></i>
+
+                        <a  type="button" class="btn btn-outline-success text-right" tooltip="tooltip" title="Faça login" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Entrar
+                        </a>
+                        <a href="{{url('cadastro')}}" class="btn btn-warning" tooltip="tooltip" title="Junte-se a nós">
+                            Cadastre-se
+                        </a>
+
+
+                    </div>
+                    {% endif %}
+                </div>
+                {% if usuario() %}
+                <div class="row p-3">
+                    <div class="col-md-6">
+                        <h5>Total: </b>R$ <span id="valor_total" class="ml-1"></span></h5>
+                    </div>
+                    <div align="right" class="col-md-6">
+
+                        <button type="button" id="btn-comprar" class="btn btn-info" data-bs-dismiss="modal">Comprar Mais</button>
+
+
+                        <button type="submit"  value="Finalizar"  class="btn btn-success">Finalizar Compra</button>
+
+                    </div>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const comprarMaisButton = document.getElementById("btn-comprar");
+        const carrinhoModal = new bootstrap.Modal(document.getElementById("carrinhoModal"));
+
+        comprarMaisButton.addEventListener("click", function () {
+            location.reload();
+            carrinhoModal.hide();
+        });
+    });
+</script>
+

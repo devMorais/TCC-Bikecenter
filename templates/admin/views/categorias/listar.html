@@ -1,0 +1,60 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %} 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Categorias
+        </li>
+    </ol>
+</nav>
+{{flash()}}
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+        <div>
+            <span class="badge rounded text-bg-secondary">{{total.total}} categorias</span> 
+            <span class="badge rounded text-bg-success">{{total.ativo}} ativo</span> 
+            <span class="badge rounded text-bg-danger">{{total.inativo}} inativo</span> 
+        </div>
+        <a href="{{url('admin/categorias/cadastrar')}}" class="btn btn-dark">Cadastrar</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped" id="tabelaCategorias">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Descrição</th>
+                        <th class="text-center">Status</th>
+                        <th scope="col" class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for categoria in categorias %}
+                    <tr>
+                        <th>{{categoria.id}}</th>
+                        <td>{{categoria.desc_categoria}}</td>
+                        <td class="text-center">
+                            {% if categoria.status == 1 %}
+                            <i class="fa-solid fa-circle text-success" tooltip="tooltip" title="Ativo"></i>
+                            {% else %}
+                            <i class="fa-solid fa-circle text-danger" tooltip="tooltip" title="Inativo"></i>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a href="{{url('admin/categorias/editar/'~categoria.id)}}" title="Editar"><i class="fa-solid fa-pen"></i></a>
+                            <a href="{{url('admin/categorias/deletar/'~categoria.id)}}" data-confirm="Você realmente quer fazer isso?"><i class="fa-solid fa-trash"></i></a>                        
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>     
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "dashboard.html" %}
+{% block conteudo %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Produtos
+        </li>
+    </ol>
+</nav>
+{{flash()}}
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+        <div>
+            <span class="badge rounded text-bg-secondary">{{total.produtos}} produtos</span> 
+            <span class="badge rounded text-bg-success">{{total.produtosAtivo}} ativo</span> 
+            <span class="badge rounded text-bg-danger">{{total.produtosInativo}} inativo</span> 
+        </div>
+        <a href="{{url('admin/produtos/cadastrar')}}" class="btn btn-dark">Cadastrar</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+           <table class="table table-hover" id="tabela">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+<!--                        <th scope="col" class="text-center">Marca</th>-->
+                        <th class="text-center">Status</th>
+                        <th scope="col" class="text-center">Descrição</th>
+                        <th scope="col" class="text-center">Imagem</th>
+                        <th scope="col" class="text-center">Categoria</th>
+                        <th scope="col" class="text-center">Detalhes</th>
+                        <th scope="col" class="text-center">Valor R$</th>
+                        <th scope="col" class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produto in produtos %}
+                    <tr>
+                        <th class="text-center">{{produto.id}}</th>
+<!--                        <td class="text-center">{{produto.marca.desc_marca}}</td>-->
+                        <td class="text-center">
+                            {% if produto.status == 1 %}
+                            <i class="fa-solid fa-circle text-success" tooltip="tooltip" title="Ativo"></i>
+                            {% else %}
+                            <i class="fa-solid fa-circle text-danger" tooltip="tooltip" title="Inativo"></i>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">{{resumirTexto(produto.desc_produto, 10)}}</td>
+                        <th>
+                            <div class="float-xl-start float-lg-none capa mx-auto">
+                                <div class="card border-0">
+                                    <a data-fancybox data-caption="{{produto.desc_produto}}" class="overflow zoom " href="{{url('uploads/imagens/'~produto.imagem)}}">
+                                        <img src="{{url('uploads/imagens/'~produto.imagem)}}" />
+                                    </a>
+                                </div>
+                            </div>
+                        </th>
+                        <td class="text-center">{{produto.categoria.desc_categoria}}</td>
+                        <td class="text-center">{{resumirTexto(produto.detalhes_produtos, 10)}}</td>
+                        <td class="text-center">R$ {{formatarValor(produto.valor)}}</td>
+                        <td class="text-center">
+                         <a href="{{url('admin/produtos/editar/'~produto.id)}}" title="Editar"><i class="fa-solid fa-pen"></i></a>
+                         <a href="{{ url('admin/produtos/deletar/' ~ produto.id) }}" data-confirm="Você realmente quer fazer isso?"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>     
+    </div>
+</div>
+{% endblock %}

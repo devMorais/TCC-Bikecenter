@@ -1,0 +1,46 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Usuários
+        </li>
+    </ol>
+</nav>
+
+{{ flash() }}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <form action="{{url('admin/entregas/editar/'~entrega.id)}}" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="fkstatusentrega" class="form-label">Status da Entrega</label>
+                        <select class="form-select" name="fkstatusentrega" id="fkstatusentrega">
+                            {% for statusentrega in statusentregas %}
+                            <option value="{{ statusentrega.id }}" {% if entrega.fkstatusentrega == statusentrega.id %}selected{% endif %}>{{ statusentrega.desc_status }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="desc_entrega" class="form-label">Descrição da entrega:</label>
+                        <input type="text" name="desc_entrega" id="desc_produto" value="{{ entrega.desc_entrega}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid gap-2 my-4">
+                  <input type="submit" class="btn btn-dark" value="{% if entrega.id %}Atualizar{% else %}Cadastrar{% endif %}">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

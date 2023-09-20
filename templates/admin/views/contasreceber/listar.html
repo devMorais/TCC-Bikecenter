@@ -1,0 +1,102 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %}  
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Contas a Receber
+        </li>
+    </ol>
+</nav>
+
+{{ flash() }}
+
+<div class="card border-0 shadow-sm">
+    <!--    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+             <div>
+                <span class="badge rounded text-bg-warning bg-opacity-25">
+                     <span class="text-dark bg-opacity-100">{{total.usuarios}} Clientes</span>
+                    <span class="badge text-bg-success bg-opacity-100">{{total.usuariosAtivo}}</span>
+                    <span class="badge text-bg-danger bg-opacity-100">{{total.usuariosInativo}}</span>
+                </span> 
+                 
+                 <span class="badge rounded text-bg-danger bg-opacity-25">
+                    <span class="text-dark bg-opacity-100">{{total.admin}} admin</span>
+                    <span class="badge text-bg-success bg-opacity-100">{{total.adminAtivo}}</span>
+                    <span class="badge text-bg-danger bg-opacity-100">{{total.adminInativo}}</span>
+                </span>
+                 
+                 <span class="badge rounded text-bg-secondary bg-opacity-25">
+                    <span class="text-dark bg-opacity-100">{{total.gerente}} gerente</span>
+                    <span class="badge text-bg-success bg-opacity-100">{{total.gerenteAtivo}}</span>
+                    <span class="badge text-bg-danger bg-opacity-100">{{total.gerenteInativo}}</span>
+                </span>
+            </div>
+            <a href="{{url('admin/usuarios/cadastrar')}}" class="btn btn-dark" tooltip="tooltip" title="Cadastrar Post">
+                Cadastrar
+            </a>
+        </div>-->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped" id="tabela">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th class="text-center">Itens da venda</th>
+                        <th>Parcela</th>
+                        <th class="text-center">Valor</th>
+
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for receber in contasreceber %}
+                    <tr>
+                        <th>{{receber.id}}</th>
+
+                        <td class="text-center">
+                            <div>
+                                <a href="#" onclick="entregaModal({{ receber.fkvenda }})" tooltip="tooltip" title="Itens da Venda" data-bs-toggle="modal" data-bs-target="#entregaModal">
+                                    <i class="fa-solid fa-person-walking-luggage">{{receber.fkvenda}}</i>
+                                    
+                                </a>
+                            </div>
+                        </td>
+                        <td>{{receber.parcela}}</td>
+                        <td class="text-center">
+                            <!--                            <a href="{{ url('itens/venda/' ~ entrega.venda().id) }}" 
+                                                           data-bs-toggle="offcanvas" 
+                                                           data-bs-target="#offcanvasExample" 
+                                                           role="button" 
+                                                           aria-controls="offcanvasExample">-->
+                            R$ {{formatarValor(receber.valor)}}
+                            <!--                            </a>-->
+                            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body">
+                                    <div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>     
+
+
+    </div>
+</div>
+{% endblock %}

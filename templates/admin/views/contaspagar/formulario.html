@@ -1,0 +1,49 @@
+
+
+{% extends "dashboard.html" %}
+
+{% block conteudo %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ url('admin/dashboard') }}">
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Baixa de NF
+        </li>
+    </ol>
+</nav>
+
+{{ flash() }}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <form action="{{ url('admin/contaspagar/editar/' ~ pagar.id) }}" method="post">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <small class="text-muted">Série da nota: {{ pagar.notaEntrada().serie}}</small><br>
+                    <small class="text-muted">Emissão da nota: {{ pagar.notaEntrada().dataemissao| date("d/m/Y") }}</small><br>
+                    <small class="text-muted"> Valor R$: {{ formatarValor(pagar.valor) }}</small><br>
+                    <small class="text-muted"> Data vencimento: {{ pagar.datavencimento | date("d/m/Y") }}</small><br><hr>
+                    <small class="text-dark"> Data atual: {{ dataAtual()}}</small><br>
+                </div>
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label for="desc_entrega" class="form-label">Atualizar pagamento da NF:</label>
+                        <small class="text-muted">Nº {{ pagar.notaEntrada().numeronota }}</small>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="databaixa" class="form-label">Data baixa:</label>
+                        <input type="date" name="databaixa" id="dataemissao" value="{{pagar.databaixa}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid gap-2 my-4">
+                <input type="submit" class="btn btn-dark" value="Atualizar">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

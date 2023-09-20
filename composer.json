@@ -1,0 +1,22 @@
+{
+    "autoload": {
+        "psr-4": {
+            "sistema\\": "sistema/"
+        },
+        "files": [
+            "sistema/configuracao.php"
+        ]
+    },
+    "require": {
+        "pecee/simple-router": "5.3.0.5",
+        "twig/twig": "^3.0",
+        "verot/class.upload.php": "^2.1",
+        "openboleto/openboleto": "dev-master",
+        
+        "dompdf/dompdf": "^2.0",
+        "digitalnature/php-ref": "dev-master",
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

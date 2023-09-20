@@ -1,0 +1,97 @@
+{% extends 'baseCarrinho.html' %}
+
+{% block conteudo %}
+<div class="container my-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{url()}}" class="text-secondary fs-4">
+                    <i class="fa-solid fa-house" style="vertical-align: middle;"></i>
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page" style="display: flex; align-items: center;">
+                Finalizar compras
+            </li>
+        </ol>
+    </nav>
+
+    {{ flash() }}
+
+    <form method="POST" action="{{ url('compra/efetuada') }}">
+        <input type="hidden" name="id_usuario" value="{{ usuario().id }}">
+
+        <div class="saudacao text-center text-muted d-block my-3 lead">
+            <strong>{{ dataAtual() }}</strong><br>
+            <strong>{{ saudacao() }}, {{ usuario().nome }}.</strong>
+            <br>
+            Parabéns pela escolha dos produtos!
+        </div>
+
+        <div class="row">
+            <!-- Forma de Pagamento -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Escolha a forma de pagamento</h5>
+                        <hr class="my-2">
+
+                        <div class="mb-3">
+                            <label for="fkformadepagamento" class="form-label">Formas de pagamento disponíveis:</label>
+                            <select class="form-select" name="fkformadepagamento" id="idfkforma">
+                                {% for forma in formasdepagamento %}
+                                <option value="{{ forma.id }}">{{ forma.descricao_forma }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Endereço para Entrega -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Escolha o endereço para entrega</h5>
+                        <hr class="my-2">
+
+                        <div class="mb-3">
+                            <label for="fkendereco" class="form-label">Seus endereços:</label>
+                            <select class="form-select" name="fkendereco" id="idfkendereco">
+                                {% for endereco in enderecos %}
+                                <option value="{{ endereco.dados.id }}">
+                                    Cep: {{ endereco.dados.cep }} | Complemento: {{ endereco.dados.complemento }} | Logradouro: {{ endereco.dados.logradouro }} | Nº: {{ endereco.dados.numero }} | Tipo: {{ endereco.tipoendereco ? endereco.tipoendereco.dados.desc_tipoendereco : 'N/A' }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-end mt-4">
+            <div class="col-lg-3 col-md-4">
+                <div class="p-3 border bg-light shadow-sm">
+                    {% if usuario().fktipousuario == 1 %}
+                    <div class="position-relative" tooltip="tooltip" title="Ver carrinho" data-bs-toggle="modal" data-bs-target="#carrinhoModal" style="cursor: pointer;">
+                        <i class="fa-solid fa-cart-shopping fa-3x"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger p-1" tooltip="tooltip" title="Quantidade de itens" style="font-size: 0.75rem;">
+                            {% if QtdCarrinho() > 0 %}
+                            {{ QtdCarrinho() }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    {%if valorTotalCarrinho() > 0%}
+                    <small class="tempoCarregamento">R$ <b>{{valorTotalCarrinho()}}</b></small>
+                    {%endif%}
+                    {% endif %}
+
+                </div> 
+                <button class="btn btn-dark mt-2" type="submit">Comprar</button> 
+            </div>
+        </div>
+    </form>
+    <!-- Modal de Carrinho -->
+    {% include 'modalCarrinho.html' %}
+</div>
+
+{% endblock %}

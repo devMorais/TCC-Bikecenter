@@ -1,0 +1,46 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ url('admin/dashboard') }}">
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Usuários
+        </li>
+    </ol>
+</nav>
+
+{{ flash() }}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <form action="{{ url('admin/estoque/editar/' ~ estoque.id) }}" method="post">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <a href="{{ url('uploads/imagens/' ~ estoque.produto().imagem) }}" data-fancybox data-caption="{{ estoque.produto().desc_produto }}">
+                        <img src="{{ url('uploads/imagens/thumbs/' ~ estoque.produto().imagem) }}" class="capa" style="max-width: 80px">
+                    </a>
+                    <small class="text-muted">{{ estoque.produto().desc_produto }}</small>
+                </div>
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label for="desc_entrega" class="form-label">Você tem certeza que deseja atualizar a quantidade do produto:</label>
+                        {{ estoque.produto().id }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantidade" class="form-label">Quantidade</label>
+                        <input type="number" name="quantidade" id="quantidade" value="{{ estoque.quantidade }}" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid gap-2 my-4">
+                <input type="submit" class="btn btn-dark" value="Atualizar">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

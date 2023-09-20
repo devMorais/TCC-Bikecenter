@@ -1,0 +1,76 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Produtos
+        </li>
+    </ol>
+</nav>
+
+{{ flash() }}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <form action="{% if produto.id %}{{url('admin/produtos/editar/'~produto.id)}}{%else%}{{url('admin/produtos/cadastrar')}}{%endif%}" method="post" enctype="multipart/form-data">
+
+            <input type="file" name="imagem" value="{{produto.imagem}}" accept=".png, .jpg, .jpeg">
+
+            <div class="mb-3">
+                <label for="desc_produto" class="form-label">Descrição:</label>
+                <input type="text" name="desc_produto" id="desc_produto" value="{{produto.desc_produto}}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="detalhes_produtos" class="form-label">Especificações:</label>
+                <textarea name="detalhes_produtos" id="summernote" class="form-control" rows="10">{{produto.detalhes_produtos}}</textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="idcategoria" class="form-label">Categoria</label>
+                        <select class="form-select" name="fkcategoria" id="idcategoria">
+                            {% for categoria in categorias %}
+                            <option value="{{categoria.id}}" {% if produto.fkcategoria == categoria.id %}selected{%endif%}>{{categoria.desc_categoria}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" name="status">
+                            <option value="1" {% if produto.status == '1' %}selected{%endif%}>Ativo</option>
+                            <option value="0" {% if produto.status == '0' %}selected{%endif%}>Inativo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="valor" class="form-label">Valor:</label>
+                    <input type="text" name="valor" id="valor" value="{{produto.valor}}" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Marca:</label>
+                        <select class="form-select" name="fkmarca">
+                            {% for marca in marcas %}
+                            <option value="{{marca.id}}" {%if produto.fkmarca == marca.id %}selected{% endif %} >{{marca.desc_marca}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+                </div>
+
+                <input type="submit" class="btn btn-dark" value="{% if produto.id %}Atualizar{%else%}Cadastrar{%endif%}">
+                </form>
+            </div>    
+    </div>
+</div>
+{% endblock %}

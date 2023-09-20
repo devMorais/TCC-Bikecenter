@@ -1,0 +1,84 @@
+{% extends "dashboard.html" %}
+
+{% block conteudo %} 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{url('admin/dashboard')}}">
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            NF Entrada
+        </li>
+    </ol>
+</nav>
+
+<div class="card border-0">
+    {{flash()}}
+    <div class="card-body">               
+        <form action="{{url('admin/nf/pagar')}}" method="post">
+            <div class="row">
+                <small class="text-center text-muted">Dados da NF:</small>
+                <hr>
+                <div class="col-md-4 mb-3">
+                    <label for="fkfornecedor" class="form-label">Fornecedor</label>
+                    <select class="form-select" name="fkfornecedor" id="fkfornecedor">
+                        {% for fornecedor in fornecedores %}
+                        <option value="{{fornecedor.id}}" {% if nf.fkfornecedor  == fornecedor.id %}selected{%endif%}>{{fornecedor.desc_fornecedor}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="dataemissao" class="form-label">Emissão</label>
+                    <input type="date" name="dataemissao" id="dataemissao" value="{{nf.dataemissao}}" class="form-control">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="serie" class="form-label">Série</label>
+                    <input type="number" name="serie" id="serie" value="{{nf.serie}}" class="form-control">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="numeronota" class="form-label">Número NF:</label>
+                    <input type="text" name="numeronota" id="numeronota" value="{{nf.numeronota}}" class="form-control">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="fkformapagamento" class="form-label">Forma de pagamento</label>
+                    <select class="form-select" name="fkformapagamento">
+                        {% for forma in formaspagamento %}
+                        <option value="{{forma.id}}" {% if nf.fkformapagamento  == forma.id %}selected{% endif %}>{{forma.descricao_forma}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <small class="text-center text-muted">Itens da NF:</small>
+                <hr>
+
+                <div class="col-md-4 mb-3">
+                    <label for="fkproduto" class="form-label">Produto</label>
+                    <select class="form-select" name="fkproduto">
+                        {% for produto in produtos %}
+                        <option value="{{produto.id}}">{{produto.id}} - {{produto.desc_produto}} || R$ {{formatarValor(produto.valor)}}</option>
+                        {% endfor %}
+                    </select>
+                </div>                
+                <div class="col-md-4 mb-3">
+                    <label for="qtd" class="form-label">Quantidade</label>
+                    <input type="number" name="qtd" id="qtd" class="form-control" oninput="calculateTotal()">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="vlrunitario" class="form-label">Valor unitário</label>
+                    <input type="text" name="vlrunitario" id="vlrunitario" class="form-control" oninput="calculateTotal()">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="valortotal" class="form-label">Valor total</label>
+                    <input type="text" name="valortotal" id="valortotal" class="form-control" readonly>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <input type="submit" class="btn btn-dark float-end" value="Cadastrar NF">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
